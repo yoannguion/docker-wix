@@ -67,3 +67,4 @@ The workaround for this is to disable validation with the `-sval` flag:
 ``` sh
 docker run --rm -v $(pwd):/wix yoannguion/wix light sample.wixobj -sval
 ```
+
