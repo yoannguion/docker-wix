@@ -1,16 +1,16 @@
 FROM i386/alpine:3.13.2
 MAINTAINER Yoann GUION <yoann.guion@gmail.com>
 
-ARG wine_uid
-ARG wine_gid
+ENV WINE_UID=
+ENV WINE_GID=
 
 # Wine 32Bit for running EXE
 RUN apk add --no-cache wine=4.0.3-r0 freetype=2.10.4-r1 wget ncurses-libs \
 # Create a separate user for Wine
-    && if [ -n "${wine_gid}" ] ; \
-    then addgroup --system wine -g ${wine_gid} ; \
+    && if [ -n "${WINE_UID}" ] ; \
+    then addgroup --system wine -g ${WINE_GID} ; \
     else addgroup --system wine ; fi \
-    && if [ -n "${wine_uid}" ] ; \
+    && if [ -n "${WINE_UID}" ] ; \
     then \
     adduser \
     --home /home/wine \
@@ -18,7 +18,7 @@ RUN apk add --no-cache wine=4.0.3-r0 freetype=2.10.4-r1 wget ncurses-libs \
     --shell /bin/bash \
     --gecos "non-root user for Wine" \
     --ingroup wine \
-    --u ${wine_uid} \
+    --u ${WINE_UID} \
     wine ; \
     else \
     adduser \
@@ -53,3 +53,4 @@ RUN wine wineboot && \
     && mkdir $WINEPREFIX/drive_c/temp
 
 WORKDIR /wix
+USER root

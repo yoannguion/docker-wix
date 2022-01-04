@@ -12,7 +12,21 @@ for exe in $(ls /home/wine/wix | grep .exe$); do
 
     cat > $binpath/$name << EOF
 #!/bin/sh
-wine /home/wine/wix/$exe \$@
+if [[ -n ${WINE_UID} ]]; then
+  echo "change wine uid to ${WINE_UID}"
+  usermod -u ${WINE_UID} wine
+fi
+
+if [[ -n ${WINE_GID} ]]; then
+  echo "change wine gid to ${WINE_GID}"
+  groupmod  -g ${WINE_GID} wine
+fi
+
+if [[ -n ${WINE_UID} ]]; then
+  runuser wine wine /home/wine/wix/$exe \$@
+else
+  wine /home/wine/wix/$exe \$@
+fi
 EOF
     chmod +x $binpath/$name
 done
