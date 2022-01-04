@@ -1,5 +1,5 @@
 FROM i386/alpine:3.13.2
-MAINTAINER Zach Wasserman <zach@dactiv.llc>
+MAINTAINER Yoann GUION <yoann.guion@gmail.com>
 
 ARG wine_uid
 ARG wine_gid

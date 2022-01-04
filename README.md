@@ -8,10 +8,10 @@ Want to build MSI packages on macOS or Linux? Read on.
 ## Docker Hub
 
 The precompiled images are available at
-[hub.docker.com/r/dactiv/wix](https://hub.docker.com/r/dactiv/wix).
+[hub.docker.com/r/yoannguion/wix](https://hub.docker.com/r/yoannguion/wix).
 
 ``` sh
-docker pull dactiv/wix
+docker pull yoannguion/wix
 ```
 
 ## Requirements
@@ -25,7 +25,7 @@ The container build exposes each of the WiX Toolset executables in the `PATH`.
 This means that running WiX's `candle.exe` is simple as:
 
 ``` sh
-docker run --rm dactiv/wix candle
+docker run --rm yoannguion/wix candle
 ```
 
 In order to do anything useful with WiX, you need to mount a volume to expose
@@ -34,7 +34,7 @@ container is `/wix`, so it is easiest to mount the host's working directory to
 that path:
 
 ``` sh
-docker run --rm -v $(pwd):/wix dactiv/wix candle sample.wxs
+docker run --rm -v $(pwd):/wix yoannguion/wix candle sample.wxs
 ```
 
 ## Example
@@ -44,8 +44,8 @@ the `sample.msi`, run the following commands:
 
 ``` sh
 cd sample
-docker run --rm -v $(pwd):/wix dactiv/wix candle sample.wxs
-docker run --rm -v $(pwd):/wix dactiv/wix light sample.wixobj -sval
+docker run --rm -v $(pwd):/wix yoannguion/wix candle sample.wxs
+docker run --rm -v $(pwd):/wix yoannguion/wix light sample.wixobj -sval
 ```
 
 The `sample.msi` will now be in the `sample` directory.
@@ -55,7 +55,7 @@ The `sample.msi` will now be in the `sample` directory.
 ### `light` fails when running validation
 
 ``` sh
-docker run --rm -v $(pwd):/wix dactiv/wix light sample.wixobj
+docker run --rm -v $(pwd):/wix yoannguion/wix light sample.wixobj
 Windows Installer XML Toolset Linker version
 Copyright (c) .NET Foundation and contributors. All rights reserved.
 
@@ -65,5 +65,5 @@ light.exe : error LGHT0216 : An unexpected Win32 exception with error code 0x65B
 The workaround for this is to disable validation with the `-sval` flag:
 
 ``` sh
-docker run --rm -v $(pwd):/wix dactiv/wix light sample.wixobj -sval
+docker run --rm -v $(pwd):/wix yoannguion/wix light sample.wixobj -sval
 ```
